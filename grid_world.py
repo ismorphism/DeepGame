@@ -12,9 +12,9 @@ class GridGame():
         self.numberofGoals = 2
         self.numberofAgents = n_agents
         self.seed = seed
+        self.obstacle = [np.random.choice(range(0, self.sizeofGridWorld)),  int(np.median(range(0, self.sizeofGridWorld)))]
         np.random.seed(seed)
         random.seed(seed)
-
 
     def getSensors(self):
         # State: locations of all agents
@@ -26,10 +26,16 @@ class GridGame():
         tempPos = []
         self.prevAgents = copy.deepcopy(self.agents)
         self.isCollide = False
+        self.isCollideObstacle = [False, False]
         for i in range(self.numberofAgents):
             tempPos.append(self.__move__(copy.deepcopy(self.agents[i]), actions[i]))
-        if not self.__isCollideWithEachOther(tempPos):
+        if not self.__isCollideWithEachOther(tempPos) and not self.__isCollideWithObstacle(tempPos):
             self.agents = tempPos
+        if self.__isCollideWithObstacle(tempPos):
+            if not self.isCollideObstacle[0]:
+                self.agents[0] = tempPos[0]
+            if not self.isCollideObstacle[1]:
+                self.agents[1] = tempPos[1]
 
     def step(self, actions):
         #observation, reward, done, info
@@ -72,6 +78,16 @@ class GridGame():
         else:
             return False
 
+    def __isCollideWithObstacle(self, tempPos):
+        if (tempPos[0][0] == self.obstacle[0]) and (tempPos[0][1] == self.obstacle[1]):
+            self.isCollideObstacle[0] = True
+            if (tempPos[1][0] == self.obstacle[0]) and (tempPos[1][1] == self.obstacle[1]):
+                self.isCollideObstacle[1] = True
+                if True in self.isCollideObstacle:
+                    return True
+        else:
+            return False
+
     def __isReachGoal(self):
         # return boolean list, that determine if each agent reach each goal.
         irGoal = [False, False]
@@ -85,34 +101,34 @@ class GridGame():
         return irGoal
 
     def reset(self):
-        # self.agents = [np.array([0, 0]),
-        #                np.array([2, 0])]
-        # self.prevAgents = [np.array([0, 0]),
-        #                    np.array([2, 0])]
+        self.agents = [np.array([0, 0]),
+                       np.array([self.sizeofGridWorld-1, 0])]
+        self.prevAgents = [np.array([0, 0]),
+                           np.array([self.sizeofGridWorld-1, 0])]
 
-        row_1 = np.random.choice([0, 1], 1)[0]
-        column_1 = np.random.choice([0, 1], 1)[0]
-
-        second_list_row = [1, 2]
-        if row_1 in second_list_row:
-            second_list_row.remove(row_1)
-
-        second_list_column = [0, 1]
-        if column_1 in second_list_row:
-            second_list_column.remove(column_1)
-
-        row_2 = np.random.choice(second_list_row, 1)[0]
-        column_2 = np.random.choice(second_list_column, 1)[0]
-
-        self.agents = [np.array([row_1, column_1]),
-                       np.array([row_2, column_2])]
-
-        self.prevAgents = [np.array([row_1, column_1]),
-                       np.array([row_2, column_2])]
+        # row_1 = np.random.choice([0, 1], 1)[0]
+        # column_1 = np.random.choice([0, 1], 1)[0]
+        #
+        # second_list_row = [1, 2]
+        # if row_1 in second_list_row:
+        #     second_list_row.remove(row_1)
+        #
+        # second_list_column = [0, 1]
+        # if column_1 in second_list_row:
+        #     second_list_column.remove(column_1)
+        #
+        # row_2 = np.random.choice(second_list_row, 1)[0]
+        # column_2 = np.random.choice(second_list_column, 1)[0]
+        #
+        # self.agents = [np.array([row_1, column_1]),
+        #                np.array([row_2, column_2])]
+        #
+        # self.prevAgents = [np.array([row_1, column_1]),
+        #                np.array([row_2, column_2])]
 
         self.isReachGoal = False
-        self.goals = [np.array([2, 2]),
-                          np.array([0, 2])]
+        self.goals = [np.array([self.sizeofGridWorld-1, self.sizeofGridWorld-1]),
+                          np.array([0, self.sizeofGridWorld-1])]
 
     def getJointReward(self):
         jointRew = [0, 0]
@@ -124,13 +140,9 @@ class GridGame():
         if self.isCollide:
             jointRew[0] -= 1
             jointRew[1] -= 1
+        if self.isCollideObstacle[0]:
+            jointRew[0] -= 1
+        if self.isCollideObstacle[1]:
+            jointRew[1] -= 1
 
         return np.array(jointRew)
-
-
-class PredatorPrey():
-    pass
-
-
-class Soccer():
-    pass
