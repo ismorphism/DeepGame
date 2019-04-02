@@ -15,7 +15,6 @@ Here you can see implementations of the following single- and multi-agent learni
 Run the file **run_grid_game.py** with the following command and default parameters:
 ```
 python run_grid_game.py
-
 ```
 
 If your want to change the size of the grid world, number of iterations or some hyperparametes you should look through these arguments of `run_grid_game.py`:
