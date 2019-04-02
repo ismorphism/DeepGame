@@ -1,3 +1,5 @@
+**Status:** Active (under active development, breaking changes may occur). Also, the program is well checked in the case of **n_agents=2**
+
 # DeepGame
 
 Here you can see implementations of the following single- and multi-agent learning algorithms:
