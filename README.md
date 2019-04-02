@@ -1,4 +1,4 @@
-**Status:** Active (under active development, breaking changes may occur). Also, the program is well checked in the case of **n_agents=2**
+**Status:** Active (under active development, breaking changes may occur). The program is checked in the case of **n_agents=2**
 
 # DeepGame
 
