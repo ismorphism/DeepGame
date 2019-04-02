@@ -20,7 +20,7 @@ python run_grid_game.py
 If your want to change the size of the grid world, number of iterations or some hyperparametes you should look through these arguments of `run_grid_game.py`:
 
 - `--grid_size`, the size of the grid world. Default one is 3,
-- `--gamma`, the value of the Gamma in Bellman. Default one is 0.95,
+- `--gamma`, the value of the Gamma in Bellman equation. Default one is 0.95,
 - `--epsilon`, the size of the epsilon. Default one is 0.5,
 - `--iterations`, the number of steps in the grid World. Default one is 1000,
 - `--learning_rate`, the learning rate (alpha) value for Q-learning method. Default one is 0.9
