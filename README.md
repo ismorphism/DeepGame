@@ -1,5 +1,4 @@
 # DeepGame
-Multi-agent reinforcement learning programs based on Game theory
 
 Here you can see implementations of the following single- and multi-agent learning algorithms:
 1) Vanilla Q-learning algorithm (Every agent behaves in optimal Q-value way)
