@@ -25,4 +25,3 @@ If your want to change the size of the grid world, number of iterations or some 
 - `--iterations`, the number of steps in the grid World. Default one is 1000,
 - `--learning_rate`, the learning rate (alpha) value for Q-learning method. Default one is 0.9
 - `--method`, the method to choose (Q-learning, Nash-Q). Default one is 'Q'
-```
